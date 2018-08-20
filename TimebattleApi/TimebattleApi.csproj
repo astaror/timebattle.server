@@ -8,14 +8,13 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
-    <Folder Include="KafkaConsumers\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Confluent.Kafka" Version="1.0.0-experimental-10" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.Orleans.Core" Version="2.0.3" />
     <PackageReference Include="Orleans.Providers.MongoDB" Version="2.0.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.0.0-alpha.436" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="3.0.0" />
   </ItemGroup>

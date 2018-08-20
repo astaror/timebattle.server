@@ -9,10 +9,10 @@ services:
     depends_on:
       - mongomain
       - grainssilo
-      - kafka
+      - redis
     environment:
       - CLUSTER_CONNECTION_STRING=mongodb://mongomain:27017
-      - KAFKA=kafka:9092
+      - REDIS=redis:6379
 
   managementapi:
     image: managementapi
@@ -42,31 +42,20 @@ services:
       - mongomain
       - mongoplayers
       - mongoworld
-      - kafka
+      - redis
     environment:
       - CLUSTER_CONNECTION_STRING=mongodb://mongomain:27017
       - PLAYER_CONNECTION_STRING=mongodb://mongoplayers:27017
       - WORLD_CONNECTION_STRING=mongodb://mongoworld:27017
       - SELF=grainssilo
-      - KAFKA=kafka:9092
+      - REDIS=redis:6379
 
-  zookeeper:
-    image: wurstmeister/zookeeper:latest
-    ports:
-      - "2181:2181"
-
-  kafka:
-    image: wurstmeister/kafka:latest
-    ports:
-      - "9092"
+  redis:
+    image: bitnami/redis:latest
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.1.64
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-#      KAFKA_CREATE_TOPICS: "Sector:1:1"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    depends_on:
-      - zookeeper
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - 16379:6379
 
   mongomain:
     image: mongo:latest

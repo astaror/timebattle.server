@@ -68,7 +68,7 @@ namespace GrainsSilo
 			    // Configure logging with any logging framework that supports Microsoft.Extensions.Logging.
 			    // In this particular case it logs using the Microsoft.Extensions.Logging.Console package.
 			    .ConfigureLogging(logging => logging.AddConsole())
-			    .ConfigureServices(svc => svc.AddSingleton<IKafkaProducer>(new KafkaProducer()));
+			    .ConfigureServices(svc => svc.AddSingleton<IPubProducer>(new PubProducer()));
 		    var mainConnectionString = Environment.GetEnvironmentVariable("CLUSTER_CONNECTION_STRING") ?? "localhost";
 		    var playerDataConnectionString = Environment.GetEnvironmentVariable("PLAYER_CONNECTION_STRING") ?? "localhost";
 		    var worldConnectionString = Environment.GetEnvironmentVariable("WORLD_CONNECTION_STRING") ?? "localhost";

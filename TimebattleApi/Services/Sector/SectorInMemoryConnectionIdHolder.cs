@@ -28,6 +28,8 @@ namespace TimebattleApi.Services.Sector
 		{
 			if (_userIdToConnectionId.ContainsKey(userId)) _userIdToConnectionId.TryRemove(userId, out _);
 			if (_connectionIdToUserId.ContainsKey(connectionId)) _connectionIdToUserId.TryRemove(connectionId, out _);
+			_userIdToConnectionId.TryAdd(userId, connectionId);
+			_connectionIdToUserId.TryAdd(connectionId, userId);
 		}
 
 		public void RemoveUserInformation(String connectionId)

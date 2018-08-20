@@ -15,7 +15,7 @@ namespace Grains.Grains.World
 	[StorageProvider(ProviderName = "world")]
 	public class SectorGrain : Grain<SectorGrainState>, ISectorGrain
 	{
-		private readonly IKafkaProducer _kafkaProducer = new KafkaProducer();
+		private readonly IPubProducer _pubProducer = new PubProducer();
 		private const String KafkaQueue = "Sector";
 		private String _sectorKey;
 
@@ -116,7 +116,7 @@ namespace Grains.Grains.World
 		/// <param name="position"></param>
 		private void PlayerLeftPosition(Guid playerId, InSectorCoordinates position)
 		{
-			_kafkaProducer.PushToQueue(KafkaQueue, _sectorKey, new SectorPlayerLeftPosition()
+			_pubProducer.PushToQueue(KafkaQueue, _sectorKey, new SectorPlayerLeftPosition()
 			{
 				PlayerId = playerId,
 				SectorCoordinates = State.SectorCoordinates,
@@ -132,7 +132,7 @@ namespace Grains.Grains.World
 		/// <param name="position"></param>
 		private void PlayerSetPosition(Guid playerId, InSectorCoordinates position)
 		{
-			_kafkaProducer.PushToQueue(KafkaQueue, _sectorKey, new SectorPlayerSetPosition()
+			_pubProducer.PushToQueue(KafkaQueue, _sectorKey, new SectorPlayerSetPosition()
 			{
 				PlayerId = playerId,
 				SectorCoordinates = State.SectorCoordinates,
@@ -147,7 +147,7 @@ namespace Grains.Grains.World
 		/// <param name="playerId"></param>
 		private void PlayerEntersSector(Guid playerId)
 		{
-			_kafkaProducer.PushToQueue(KafkaQueue, _sectorKey, new SectorPlayerEnter()
+			_pubProducer.PushToQueue(KafkaQueue, _sectorKey, new SectorPlayerEnter()
 			{
 				PlayerId = playerId,
 				SectorCoordinates = State.SectorCoordinates,
@@ -161,7 +161,7 @@ namespace Grains.Grains.World
 		/// <param name="playerId"></param>
 		private void PlayerLeftSector(Guid playerId)
 		{
-			_kafkaProducer.PushToQueue(KafkaQueue, _sectorKey, new SectorPlayerLeft()
+			_pubProducer.PushToQueue(KafkaQueue, _sectorKey, new SectorPlayerLeft()
 			{
 				PlayerId = playerId,
 				SectorCoordinates = State.SectorCoordinates,
